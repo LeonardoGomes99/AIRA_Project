@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Contracts\UserRepository;
+use App\Repositories\Eloquent\UserRepositoryEloquent;
+use App\Services\Contracts\UserServiceInterface;
+use App\Services\UserService;
 use Illuminate\Http\Request;
-use App\Repositories\Contracts\UsersRepositoryInterface;
 
 class UsersController extends Controller
 {
-    
-    public function all(UsersRepositoryInterface $model)
-    {
-        $users = $model->all();
-        dd($users);
+    /**
+     * @var UserServiceInterface
+     */
+    protected $userService;
 
+    public function __construct(UserServiceInterface $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    public function all()
+    {
+        dd($this->userService->getAll());
     }
 }
